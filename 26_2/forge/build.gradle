@@ -54,7 +54,7 @@ tasks.named("processResources", ProcessResources) {
 
 tasks.named("jar", Jar) {
     destinationDirectory = rootProject.releaseDirectory
-    archiveFileName = "${project.archives_base_name}-${project.minecraft_version}-${project.version}-forge.jar"
+    archiveFileName = "${project.archives_base_name}-${project.minecraft_version}-${project.version}-lexforge.jar"
     manifest {
         attributes("MixinConfigs": "hmcoptimizations.client.mixins.json")
     }
