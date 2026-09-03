@@ -5,11 +5,14 @@
   "compatibilityLevel": "JAVA_25",
   "plugin": "me.earth.headlessmc.optimizations.mixin.HmcOptimizationsMixinPlugin",
   "client": [
+    "MixinChunkSectionLayer",
     "MixinGameRenderer",
     "MixinLevelExtractor",
     "MixinMusicManager",
     "MixinParticleEngine",
+    "MixinRenderBuffers",
     "MixinSectionCompiler",
+    "MixinSectionRenderDispatcher",
     "MixinSoundEngine",
     "MixinTextureManager"
   ],

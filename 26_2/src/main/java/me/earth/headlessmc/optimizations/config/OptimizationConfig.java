@@ -19,40 +19,45 @@ public final class OptimizationConfig {
     }
 
     public static boolean render() {
-        return enabled() && property("render", true);
+        return category("render", true);
     }
 
     /**
-     * World render-state extraction invokes renderer-mod callbacks and is kept
-     * as a separate opt-in compatibility boundary.
+     * World render-state extraction is only suppressed when frame rendering is
+     * suppressed as well, so stale extracted state can never be consumed.
      */
     public static boolean worldRenderState() {
-        boolean configured = property("world_render_state", false);
-        // Extracting stale state and then asking the graphical renderer to
-        // consume it is not a supported combination.
-        return enabled() && render() && configured;
+        boolean configured = category("world_render_state", true);
+        require(configured, render(), "world_render_state", "render");
+        return configured;
     }
 
     public static boolean particles() {
-        return enabled() && property("particles", true);
+        return category("particles", true);
     }
 
     public static boolean sound() {
-        return enabled() && property("sound", true);
+        return category("sound", true);
     }
 
-    /** Animated texture uploads are visual-only but may carry mod callbacks. */
+    /** Animated texture advancement and uploads are visual-only. */
     public static boolean animatedTextures() {
-        return enabled() && property("animated_textures", false);
+        return category("animated_textures", true);
+    }
+
+    /** Chunk meshes are not required by core HeadlessMC automation. */
+    public static boolean chunkMesh() {
+        return category("chunk_mesh", true);
     }
 
     /**
-     * Chunk meshes are the most compatibility-sensitive optimization and are
-     * therefore opt-in. The supplied benchmark harness enables this property
-     * explicitly for its optimized profile.
+     * Renderer staging and builder buffers are safe to shrink only while the
+     * shared chunk-mesh optimization prevents vertex production.
      */
-    public static boolean chunkMesh() {
-        return enabled() && property("chunk_mesh", false);
+    public static boolean renderBuffers() {
+        boolean configured = category("render_buffers", true);
+        require(configured, chunkMesh(), "render_buffers", "chunk_mesh");
+        return configured;
     }
 
     public static String summary() {
@@ -62,7 +67,26 @@ public final class OptimizationConfig {
             + ", particles=" + particles()
             + ", sound=" + sound()
             + ", animated_textures=" + animatedTextures()
-            + ", chunk_mesh=" + chunkMesh();
+            + ", chunk_mesh=" + chunkMesh()
+            + ", render_buffers=" + renderBuffers();
+    }
+
+    private static boolean category(String name, boolean defaultValue) {
+        boolean configured = property(name, defaultValue);
+        return enabled() && configured;
+    }
+
+    private static void require(
+        boolean categoryEnabled,
+        boolean dependencyEnabled,
+        String category,
+        String dependency
+    ) {
+        if (categoryEnabled && !dependencyEnabled) {
+            throw new IllegalArgumentException(
+                "-D" + PREFIX + category + "=true requires -D"
+                    + PREFIX + dependency + "=true");
+        }
     }
 
     private static boolean property(String name, boolean defaultValue) {

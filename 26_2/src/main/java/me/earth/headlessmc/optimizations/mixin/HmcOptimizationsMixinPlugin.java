@@ -37,6 +37,8 @@ public final class HmcOptimizationsMixinPlugin implements IMixinConfigPlugin {
             case "MixinMusicManager", "MixinSoundEngine" -> OptimizationConfig.sound();
             case "MixinTextureManager" -> OptimizationConfig.animatedTextures();
             case "MixinSectionCompiler" -> OptimizationConfig.chunkMesh();
+            case "MixinChunkSectionLayer", "MixinRenderBuffers",
+                "MixinSectionRenderDispatcher" -> OptimizationConfig.renderBuffers();
             default -> false;
         };
     }
