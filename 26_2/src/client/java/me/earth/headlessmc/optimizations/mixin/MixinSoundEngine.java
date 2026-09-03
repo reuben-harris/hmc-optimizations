@@ -12,6 +12,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /** Leaves the sound engine unloaded, avoiding OpenAL and decoded-buffer work. */
 @Mixin(SoundEngine.class)
 public abstract class MixinSoundEngine {
+    @Inject(method = "reload", at = @At("HEAD"), cancellable = true)
+    private void hmcOptimizations$skipAudioReload(CallbackInfo callback) {
+        // The engine is deliberately never loaded. Avoid re-validating a
+        // SoundManager registry that is released after its resource listener
+        // completes, as well as redundant device teardown/setup callbacks.
+        callback.cancel();
+    }
+
     @Inject(method = "loadLibrary", at = @At("HEAD"), cancellable = true)
     private void hmcOptimizations$keepAudioDeviceUnloaded(CallbackInfo callback) {
         // SoundEngine.play already returns NOT_STARTED while loaded is false.

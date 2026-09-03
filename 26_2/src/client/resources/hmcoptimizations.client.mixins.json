@@ -17,6 +17,7 @@
     "MixinSectionCompiler",
     "MixinSectionRenderDispatcher",
     "MixinSoundEngine",
+    "MixinSoundManager",
     "MixinTextureManager"
   ],
   "injectors": {
