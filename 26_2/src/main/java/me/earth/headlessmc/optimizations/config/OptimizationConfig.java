@@ -40,6 +40,11 @@ public final class OptimizationConfig {
         return category("sound", true);
     }
 
+    /** Client light engines and their render updates are visual-only. */
+    public static boolean lighting() {
+        return category("lighting", true);
+    }
+
     /** Animated texture advancement and uploads are visual-only. */
     public static boolean animatedTextures() {
         return category("animated_textures", true);
@@ -66,6 +71,7 @@ public final class OptimizationConfig {
             + ", world_render_state=" + worldRenderState()
             + ", particles=" + particles()
             + ", sound=" + sound()
+            + ", lighting=" + lighting()
             + ", animated_textures=" + animatedTextures()
             + ", chunk_mesh=" + chunkMesh()
             + ", render_buffers=" + renderBuffers();

@@ -6,6 +6,8 @@
   "plugin": "me.earth.headlessmc.optimizations.mixin.HmcOptimizationsMixinPlugin",
   "client": [
     "MixinChunkSectionLayer",
+    "MixinClientChunkCache",
+    "MixinClientLevel",
     "MixinGameRenderer",
     "MixinLevelExtractor",
     "MixinMusicManager",
