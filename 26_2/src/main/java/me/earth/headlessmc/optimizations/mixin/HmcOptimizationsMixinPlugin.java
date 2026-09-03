@@ -40,6 +40,9 @@ public final class HmcOptimizationsMixinPlugin implements IMixinConfigPlugin {
             case "MixinSectionCompiler" -> OptimizationConfig.chunkMesh();
             case "MixinChunkSectionLayer", "MixinRenderBuffers",
                 "MixinSectionRenderDispatcher" -> OptimizationConfig.renderBuffers();
+            case "MixinAtlasManager", "MixinBlockEntityRenderDispatcher",
+                "MixinEntityRenderDispatcher", "MixinEquipmentAssetManager",
+                "MixinModelManager" -> OptimizationConfig.renderResources();
             default -> false;
         };
     }

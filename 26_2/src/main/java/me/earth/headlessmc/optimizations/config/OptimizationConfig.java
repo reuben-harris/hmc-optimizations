@@ -65,6 +65,17 @@ public final class OptimizationConfig {
         return configured;
     }
 
+    /**
+     * Baked visual resources can be released only when both frame rendering
+     * and world render-state extraction are suppressed.
+     */
+    public static boolean renderResources() {
+        boolean configured = category("render_resources", true);
+        require(configured, render(), "render_resources", "render");
+        require(configured, worldRenderState(), "render_resources", "world_render_state");
+        return configured;
+    }
+
     public static String summary() {
         return "enabled=" + enabled()
             + ", render=" + render()
@@ -74,7 +85,8 @@ public final class OptimizationConfig {
             + ", lighting=" + lighting()
             + ", animated_textures=" + animatedTextures()
             + ", chunk_mesh=" + chunkMesh()
-            + ", render_buffers=" + renderBuffers();
+            + ", render_buffers=" + renderBuffers()
+            + ", render_resources=" + renderResources();
     }
 
     private static boolean category(String name, boolean defaultValue) {
