@@ -1,0 +1,63 @@
+plugins {
+    id "net.fabricmc.fabric-loom" version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = "${project.archives_base_name}-${project.minecraft_version}"
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        hmc_optimizations {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+    withSourcesJar()
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "loader_version", project.loader_version
+
+    filesMatching("fabric.mod.json") {
+        expand(
+            version: project.version,
+            minecraft_version: project.minecraft_version,
+            loader_version: project.loader_version
+        )
+    }
+}
+
+tasks.withType(Jar).configureEach {
+    from(rootProject.file("../LICENSE")) {
+        rename { "LICENSE_hmc-optimizations" }
+    }
+
+    manifest {
+        attributes(
+            "Implementation-Title": "HMC-Optimizations",
+            "Implementation-Version": project.version
+        )
+    }
+}
