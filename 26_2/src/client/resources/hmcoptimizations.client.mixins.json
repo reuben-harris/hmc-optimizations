@@ -12,6 +12,7 @@
     "MixinLevelExtractor",
     "MixinMusicManager",
     "MixinParticleEngine",
+    "MixinParticleResources",
     "MixinRenderBuffers",
     "MixinSectionCompiler",
     "MixinSectionRenderDispatcher",

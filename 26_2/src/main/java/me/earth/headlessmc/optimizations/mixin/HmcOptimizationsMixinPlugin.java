@@ -33,7 +33,7 @@ public final class HmcOptimizationsMixinPlugin implements IMixinConfigPlugin {
         return switch (simpleName) {
             case "MixinGameRenderer" -> OptimizationConfig.render();
             case "MixinLevelExtractor" -> OptimizationConfig.worldRenderState();
-            case "MixinParticleEngine" -> OptimizationConfig.particles();
+            case "MixinParticleEngine", "MixinParticleResources" -> OptimizationConfig.particles();
             case "MixinMusicManager", "MixinSoundEngine" -> OptimizationConfig.sound();
             case "MixinClientChunkCache", "MixinClientLevel" -> OptimizationConfig.lighting();
             case "MixinTextureManager" -> OptimizationConfig.animatedTextures();
