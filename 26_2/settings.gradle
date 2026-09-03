@@ -4,9 +4,10 @@ pluginManagement {
             name = "Fabric"
             url = "https://maven.fabricmc.net/"
         }
-        mavenCentral()
         gradlePluginPortal()
     }
 }
 
 rootProject.name = "hmc-optimizations-${minecraft_version}"
+
+include("fabric", "forge", "neoforge")

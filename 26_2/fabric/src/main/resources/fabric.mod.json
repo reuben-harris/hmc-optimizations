@@ -3,7 +3,7 @@
   "id": "hmc_optimizations",
   "version": "${version}",
   "name": "HMC-Optimizations",
-  "description": "Conservative, configurable client optimizations for HeadlessMC on Minecraft ${minecraft_version}.",
+  "description": "Configurable client optimizations for HeadlessMC on Minecraft ${minecraft_version}.",
   "authors": [
     "HeadlessHQ contributors"
   ],
