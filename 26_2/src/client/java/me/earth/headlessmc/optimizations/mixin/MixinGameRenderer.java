@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.InvocationTargetException;
@@ -118,6 +119,17 @@ public abstract class MixinGameRenderer {
             hmcOptimizations$skippedRenderFrame = false;
             minecraft.levelExtractor.allChanged();
         }
+    }
+
+    /** Lets loading overlays advance without rendering their released world backdrop. */
+    @ModifyVariable(
+        method = {"extract", "render"},
+        at = @At("HEAD"),
+        argsOnly = true,
+        ordinal = 0
+    )
+    private boolean hmcOptimizations$skipReleasedLevel(boolean renderLevel) {
+        return HMC_OPTIMIZATIONS_RELEASE_RENDER_RESOURCES ? false : renderLevel;
     }
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
