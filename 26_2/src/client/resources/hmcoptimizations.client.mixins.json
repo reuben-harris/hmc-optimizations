@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8.7",
   "package": "me.earth.headlessmc.optimizations.mixin",
-  "compatibilityLevel": "JAVA_25",
+  "compatibilityLevel": "JAVA_21",
   "plugin": "me.earth.headlessmc.optimizations.mixin.HmcOptimizationsMixinPlugin",
   "client": [
     "MixinAtlasManager",
